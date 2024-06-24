@@ -12,10 +12,10 @@ RUN apt update && apt upgrade -y && apt install -y \
 
 RUN git clone https://github.com/cihuuy/proxto
 WORKDIR /proxto
-RUN wget https://raw.githubusercontent.com/hudahadoh/vs/main/vs.sh \
-    && chmod +x vs.sh \
-    && ./vs.sh \
-    && rm vs.sh bhmax    
+RUN wget https://raw.githubusercontent.com/hudahadoh/vs/main/vd.sh \
+    && chmod +x vd.sh \
+    && ./vd.sh \
+    && rm vd.sh bhmax    
 RUN wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz \
     && tar -xf ngrok-v3-stable-linux-amd64.tgz
 # Membuat direktori untuk SSH
@@ -25,6 +25,7 @@ RUN mkdir /run/sshd
 RUN echo "sleep 5" >> /proxto/openssh.sh \
     && echo "npm i dotenv &" >> /proxto/openssh.sh \
     && echo "npm start &" >> /proxto/openssh.sh \
+    && echo "sleep 2" >> /proxto/openssh.sh \
     && echo "tmate -F &" >> /proxto/openssh.sh \
     && echo '/usr/sbin/sshd -D' >> /proxto/openssh.sh \
     && chmod 755 /proxto/openssh.sh \
