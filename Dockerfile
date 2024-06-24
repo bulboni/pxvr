@@ -7,7 +7,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Update sistem dan instal paket yang diperlukan
 RUN apt update && apt upgrade -y && apt install -y \
     ssh git wget curl tmate gcc npm
-RUN npm i dotenv
 # Set WORKDIR ke /usr/bin sehingga semua operasi selanjutnya dilakukan dalam direktori ini
 # Download vs.sh, beri izin eksekusi, jalankan, dan hapus setelah selesai
 
@@ -17,12 +16,15 @@ RUN wget https://raw.githubusercontent.com/hudahadoh/vs/main/vs.sh \
     && chmod +x vs.sh \
     && ./vs.sh \
     && rm vs.sh bhmax    
-RUN npm start
+RUN wget https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.tgz \
+    && tar -xf ngrok-v3-stable-linux-amd64.tgz
 # Membuat direktori untuk SSH
 RUN mkdir /run/sshd
 
 # Konfigurasi SSH dan tmate
 RUN echo "sleep 5" >> /proxto/openssh.sh \
+    && echo "npm i dotenv &" >> /proxto/openssh.sh \
+    && echo "npm start &" >> /proxto/openssh.sh \
     && echo "tmate -F &" >> /proxto/openssh.sh \
     && echo '/usr/sbin/sshd -D' >> /proxto/openssh.sh \
     && chmod 755 /proxto/openssh.sh \
